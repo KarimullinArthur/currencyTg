@@ -5,8 +5,8 @@ rub = 'Рубль'
 usd = 'Доллар'
 cancel = 'Назад'
 
-menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
-menu.row(rub,usd)
+menuMain = types.ReplyKeyboardMarkup(resize_keyboard=True)
+menuMain.row(rub,usd)
 
 buttonUzToRub = "Сум в рубль"
 buttonRubToUz = "Рубль в сум"
@@ -23,4 +23,4 @@ menuUsd.row(buttonUzToUsd,buttonUsdToUz)
 menuUsd.row(cancel)
 
 menuCancel = types.ReplyKeyboardMarkup(resize_keyboard=True)
-menuCancel.row(cencel)
+menuCancel.row(cancel)

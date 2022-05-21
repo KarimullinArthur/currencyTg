@@ -1,6 +1,8 @@
 import requests
 import json
 
+# Main func
+
 url = "https://cbu.uz/ru/arkhiv-kursov-valyut/json/"
 
 def getRate(currency):
@@ -24,3 +26,8 @@ def calc(amount,currency,toSum=False):
 
     else: 
         return amount * float(getRate(currency)) # currency to Som
+
+# For handlers
+
+def replyCurrency(amount,currency,toSum=False):
+    return (amount,currency,toSum)

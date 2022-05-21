@@ -8,7 +8,7 @@ bot = telebot.TeleBot(TOKEN)
 @bot.message_handler(commands='start')
 def start(message):
     chat_id = message.chat.id
-    bot.send_message(chat_id,'Дарова',reply_markup=markup.menu)
+    bot.send_message(chat_id,'Дарова',reply_markup=markup.menuMain)
 
 @bot.message_handler(content_types='text')
 def menu(message):
@@ -28,11 +28,12 @@ def menuRub(message):
     chat_id = message.chat.id
     text = message.text
 
-    if text == markup.buttonUzToRub or text == markup.buttonUzToRub:
-        pass
+    if text == markup.buttonUzToRub or text == markup.buttonRubToUz:
+        msg = bot.send_message(chat_id,"Введите сумму",reply_markup=markup.menuCancel)
+        bot.register_next_step_handler(msg,amount) 
 
     elif text == markup.cancel:
-        msg = bot.send_message(chat_id,text,reply_markup=markup.menu)
+        msg = bot.send_message(chat_id,text,reply_markup=markup.menuMain)
         bot.register_next_step_handler(msg,menu)
 
 def menuUsd(message):
@@ -40,18 +41,24 @@ def menuUsd(message):
     text = message.text
 
     if text == markup.buttonUzToUsd or text == markup.buttonUsdToUz:
-        msg = bot.send_message(chat_id,"Введите сумму",reply_markup=markup.menuCencel)
+        msg = bot.send_message(chat_id,"Введите сумму",reply_markup=markup.menuCancel)
         bot.register_next_step_handler(msg,amount) 
 
     elif text == markup.cancel:
-        msg = bot.send_message(chat_id,text,reply_markup=markup.menuCencel)
+        msg = bot.send_message(chat_id,text,reply_markup=markup.menuMain)
         bot.register_next_step_handler(msg,menu)
 
 def amount(message):
     chat_id = message.chat.id
     text = message.text
 
-    
+    if text == markup.cancel:
+        msg = bot.send_message(chat_id,text,reply_markup=markup.menuMain)
+        bot.register_next_step_handler(msg,menu)
+
+    amount, currency,toSum = replyCurrency(100,'USD')
+       
+    bot.send_message(chat_id,calc(amount,currency,toSum))
 
 print('Run!')
 bot.infinity_polling()
